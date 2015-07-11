@@ -1,4 +1,9 @@
 ```
+
+% % % 
+% this lovely intro applies to NCONAWAY's DIVA, there are *unpolished* adaptations in this repo
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %   ^^^ ¯\_(ツ)_/¯
+
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % %         _     _      _     _      _     _      _     _          % %
 % %        (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)         % %
