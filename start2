@@ -1,0 +1,77 @@
+
+
+% initialize the search path
+clear;close;clc;
+addpath([pwd,'/utils/']); 
+
+% load inference trial variables
+load('inferencetrialdata')
+
+% initialize network design and set parameters
+model =  struct;
+	model.numblocks      = 15;	      % number of runs through the training set        
+	model.numinitials    = 30;	      % number of initializations to average 
+	model.weightrange    = 0.5;       % range of initial weight values
+	model.numhiddenunits = 2;         % # hidden units
+	model.learningrate   = 0.25;      % learning rate for gradient descent
+	model.betavalue      = 10;	      % beta parameter for focusing
+	model.outputrule     = 'sigmoid'; % {'linear', 'sigmoid' }
+
+% iterate across shj types
+switchtraining   = zeros(model.numblocks,3);
+classifytraining = zeros(model.numblocks,3);
+
+
+for shj = 2:4
+	
+% 	set current category structure
+	[model.inputs, model.labels] = SHJINPUTS(shj);
+	
+%   setup inference test trials
+	model.inftrials  = ...
+		[inputf1(inf_shj==shj) inputf2(inf_shj==shj) inputf3(inf_shj==shj)]; 
+	model.inftargets = ...
+		[targetf1(inf_shj==shj) targetf2(inf_shj==shj) targetf3(inf_shj==shj)];
+	model.infcategories = category(inf_shj==shj); 
+	model.infcorrect    = correct(inf_shj==shj); 
+	model.infrespfeat   = responsefeature(inf_shj==shj);
+
+% 	run simulation
+	classifyresult = DIVA(model);
+    switchresult = switch2DIVA(model);
+	
+% 	add result to training data
+	switchtraining(:,shj-1) = switchresult.training;
+	%switch_inf_test(:,shj-1) = switchresult.inf_test;
+	classifytraining(:,shj-1) = classifyresult.training;
+end
+	
+disp(switchtraining)
+disp(classifytraining)
+%disp(switch_inf_test)
+
+% --- PLOTTING RESULTS
+figure
+subplot(1,2,1)
+for i = 1:3
+	plot(switchtraining(:,i),'--k')
+	text(1:model.numblocks,switchtraining(:,i),num2str(i+1),...
+		'horizontalalignment','center','fontsize',15)
+	hold on
+end
+axis([0.5 model.numblocks+0.5 0 1])
+axis square
+set(gca,'ygrid','on')
+title('Switch Training')
+
+subplot(1,2,2)
+for i = 1:3
+	plot(classifytraining(:,i),'--k')
+	text(1:model.numblocks,classifytraining(:,i),num2str(i+1),...
+		'horizontalalignment','center','fontsize',15)
+	hold on
+end
+axis([0.5 model.numblocks+0.5 0 1])
+axis square
+set(gca,'ygrid','on')
+title('Classify Training')
