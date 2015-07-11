@@ -1,7 +1,7 @@
 ```
 
 % % % 
-% this lovely intro applies to NCONAWAY's DIVA, there are *unpolished* adaptations in this repo
+% this lovely intro applies to NCONAWAY's DIVA, there are *in-progress* adaptations in this repo
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %   ^^^ ¯\_(ツ)_/¯
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
